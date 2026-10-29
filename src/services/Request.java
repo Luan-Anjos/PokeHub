@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pokeInfo.Abilities;
+import pokeInfo.Ability;
 import pokeInfo.Pokemon;
 import pokeInfo.Stats;
 
@@ -128,7 +130,35 @@ public class Request {
 
 
 
+    public void ability () throws JsonProcessingException {
 
+        String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosAbility = objectMapper.readValue(json, Pokemon.class);
+
+        for(Abilities abilitie : dadosAbility.getAbilities()){
+            System.out.println(
+                    abilitie.getSlot() + ": " + abilitie.getAbility().getName()
+            );
+
+
+
+        }
+
+        System.out.print(" Pressione ENTER para voltar ao menu...");
+        scanner.nextLine();
+
+    }
 
 
 

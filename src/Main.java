@@ -33,7 +33,7 @@ public class Main {
                     } else if (escolhaBusca.equals("B") || escolhaBusca.equals("b")) {
                         request.BattleAttributes();
                     } else if (escolhaBusca.equals("C") || escolhaBusca.equals("c")) {
-
+                        request.ability();
                     } else if (escolhaBusca.equals("D") || escolhaBusca.equals("c")) {
 
                     } else if (escolhaBusca.equals("E") || escolhaBusca.equals("e")) {

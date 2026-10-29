@@ -12,6 +12,7 @@ public class Pokemon {
     double base_experience;
     Habitat habitat;
     List<Stats> stats;
+    List<Abilities> abilities;
 
 
     public int getId() {
@@ -41,5 +42,9 @@ public class Pokemon {
 
     public List<Stats> getStats() {
         return stats;
+    }
+
+    public List<Abilities> getAbilities() {
+        return abilities;
     }
 }
