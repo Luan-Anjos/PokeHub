@@ -1,6 +1,8 @@
 package pokeInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
     int id;
@@ -9,6 +11,7 @@ public class Pokemon {
     double weight;
     double base_experience;
     Habitat habitat;
+    List<Stats> stats;
 
 
     public int getId() {
@@ -34,5 +37,9 @@ public class Pokemon {
 
     public Habitat getHabitat() {
         return habitat;
+    }
+
+    public List<Stats> getStats() {
+        return stats;
     }
 }
