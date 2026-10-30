@@ -9,10 +9,7 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pokeInfo.Abilities;
-import pokeInfo.Ability;
-import pokeInfo.Pokemon;
-import pokeInfo.Stats;
+import pokeInfo.*;
 
 public class Request {
 
