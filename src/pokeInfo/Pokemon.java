@@ -10,12 +10,22 @@ public class Pokemon {
     int height;
     double weight;
     double base_experience;
-    Habitat habitat;
     List<Stats> stats;
     List<Abilities> abilities;
     Chain chain;
     Evolution_chain evolution_chain;
-
+    Color color;
+    Shape shape;
+    Habitat habitat;
+    List<Flavor_text_entries> flavor_text_entries;
+    int capture_rate;
+    int base_happiness;
+    int hatch_counter;
+    Generation generation;
+    int accuracy;
+    int pp;
+    int priority;
+    int power;
 
     public int getId() {
         return id;
@@ -56,5 +66,49 @@ public class Pokemon {
 
     public Evolution_chain getEvolution_chain() {
         return evolution_chain;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public List<Flavor_text_entries> getFlavor_text_entries() {
+        return flavor_text_entries;
+    }
+
+    public int getCapture_rate() {
+        return capture_rate;
+    }
+
+    public int getBase_happiness() {
+        return base_happiness;
+    }
+
+    public int getHatch_counter() {
+        return hatch_counter;
+    }
+
+    public Generation getGeneration() {
+        return generation;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
+    }
+
+    public int getPp() {
+        return pp;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public int getPower() {
+        return power;
     }
 }

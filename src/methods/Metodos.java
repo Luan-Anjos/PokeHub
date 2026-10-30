@@ -1,5 +1,7 @@
 package methods;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import pokeInfo.Pokemon;
 import services.Controller;
 import services.Request;
 
@@ -26,8 +28,10 @@ public class Metodos {
 
     Scanner scanner = new Scanner(System.in);
 
+    Request request = new Request();
 
-    public void namePokemon (){
+
+    public void namePokemon(){
         limparTerminal();
 
         String amarelo = "\u001B[93m";
@@ -135,7 +139,6 @@ public class Metodos {
         System.out.println(amarelo + negrito + " D " + reset + " - Evoluções");
         System.out.println(amarelo + negrito + " E " + reset + " - Informações biológicas");
         System.out.println(amarelo + negrito + " F " + reset + " - Movimentos e ataques");
-        System.out.println(amarelo + negrito + " G " + reset + " - Consultar outra informação");
         System.out.println(amarelo + negrito + " X " + reset + " - Voltar ao menu principal");
 
         System.out.println(ciano + "╠══════════════════════════════════╣" + reset);
@@ -150,6 +153,29 @@ public class Metodos {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    public void pokeMoves(){
+        limparTerminal();
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+
+        System.out.println(ciano + "╔══════════════════════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "       ⚔️ DIGITE O NOME DO ATAQUE (MOVE)       " + ciano + "   ║");
+        System.out.println("╚══════════════════════════════════════════════════╝" + reset);
+
+        System.out.print(amarelo + negrito
+                + " ⚡ Digite o nome do ataque: "
+                + reset);
+        String buscaMove = scanner.nextLine();
+        controller.setMove(buscaMove);
+    }
+
+
 
 
 }

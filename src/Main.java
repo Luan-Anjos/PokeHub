@@ -37,11 +37,12 @@ public class Main {
                     } else if (escolhaBusca.equals("D") || escolhaBusca.equals("d")) {
                         request.exibirEvolutions();
                     } else if (escolhaBusca.equals("E") || escolhaBusca.equals("e")) {
-
+                        request.exbirInformacoesBio();
                     } else if (escolhaBusca.equals("F") || escolhaBusca.equals("f")) {
-
-                    } else if (escolhaBusca.equals("G") || escolhaBusca.equals("g")) {
-
+                        metodo.pokeMoves();
+                        request.exibirMoves();
+                    } else {
+                        System.out.println("Essa opção não é válida: ");
                     }
 
                 }

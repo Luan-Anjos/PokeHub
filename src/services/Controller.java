@@ -4,6 +4,7 @@ public class Controller {
 
     private String nomePokemon;
     private String UrlEvolution;
+    private String move;
 
     public String getNomePokemon() {
         return nomePokemon;
@@ -19,5 +20,13 @@ public class Controller {
 
     public void setUrlEvolution(String urlEvolution) {
         UrlEvolution = urlEvolution;
+    }
+
+    public String getMove() {
+        return move;
+    }
+
+    public void setMove(String move) {
+        this.move = move;
     }
 }

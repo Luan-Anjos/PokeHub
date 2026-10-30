@@ -75,8 +75,6 @@ public class Request {
     }
 
 
-
-
     public String BattleAttributes() throws JsonProcessingException {
 
         String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
@@ -205,12 +203,12 @@ public class Request {
 
         controller.setUrlEvolution(setId);
 
-        return setId;
+        return json;
     }
 
     public String evolutions() throws JsonProcessingException {
-
-        String url = pokemonSpecies();
+        pokemonSpecies();
+        String url = controller.getUrlEvolution();
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -289,6 +287,169 @@ public class Request {
         System.out.println();
         System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
         scanner.nextLine();
+    }
+
+
+    public void exbirInformacoesBio() throws JsonProcessingException {
+
+        String json = pokemonSpecies();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosBio = objectMapper.readValue(json, Pokemon.class);
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+
+        System.out.println(ciano + "╔══════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "    🧬 INFORMAÇÕES BIOLÓGICAS    " + ciano + "║");
+        System.out.println("╠══════════════════════════════════╣" + reset);
+
+        System.out.println(
+                verde + " 🌿 Habitat: "
+                        + amarelo + negrito + dadosBio.getHabitat().getName()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " 🎨 Cor: "
+                        + amarelo + negrito + dadosBio.getColor().getName()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " 🐾 Forma: "
+                        + amarelo + negrito + dadosBio.getShape().getName()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " \uD83C\uDFAF Taxa de captura: "
+                        + amarelo + negrito + dadosBio.getCapture_rate()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " ❤\uFE0F Felicidade base: "
+                        + amarelo + negrito + dadosBio.getBase_happiness()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " \uD83E\uDD5A Ciclos de incubação: "
+                        + amarelo + negrito + dadosBio.getHatch_counter()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " \uD83D\uDCC5 Geração: "
+                        + amarelo + negrito + dadosBio.getGeneration().getName()
+                        + reset
+        );
+
+        if (dadosBio.getFlavor_text_entries() != null
+                && !dadosBio.getFlavor_text_entries().isEmpty()) {
+
+            System.out.println(ciano + "──────────────────────────────────" + reset);
+
+            System.out.println(
+                    verde + " 📖 Descrição: "
+                            + amarelo + dadosBio.getFlavor_text_entries()
+                            .get(0).getFlavor_text()
+                            + reset
+            );
+        }
+
+        System.out.println(ciano + "╠══════════════════════════════════╣");
+        System.out.println(amarelo + negrito + "    💫 FIM DAS INFORMAÇÕES 💫");
+        System.out.println(ciano + "╚══════════════════════════════════╝" + reset);
+
+        System.out.println();
+        System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
+        scanner.nextLine();
+
+    }
+
+    public String moves(){
+        String url = "https://pokeapi.co/api/v2/move/" + controller.getMove();
+
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
+
+        return json;
+    }
+
+
+
+
+
+    public void exibirMoves () throws JsonProcessingException {
+        String json = moves();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosMoves = objectMapper.readValue(json, Pokemon.class);
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+
+        System.out.println(ciano + "╔══════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "       ⚔️ INFORMAÇÕES DO GOLPE    " + ciano + "║");
+        System.out.println("╠══════════════════════════════════╣" + reset);
+
+        System.out.println(
+                verde + " \uD83E\uDD4A Golpe selecionado: "
+                        + amarelo + negrito + controller.getMove()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " 💥 Poder: "
+                        + amarelo + negrito + dadosMoves.getPower()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " 🎯 Precisão: "
+                        + amarelo + negrito + dadosMoves.getAccuracy()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " 🔋 PP: "
+                        + amarelo + negrito + dadosMoves.getPp()
+                        + reset
+        );
+
+        System.out.println(
+                verde + " ⚡ Prioridade: "
+                        + amarelo + negrito + dadosMoves.getPriority()
+                        + reset
+        );
+
+        System.out.println(ciano + "╠══════════════════════════════════╣");
+        System.out.println(amarelo + negrito + "       ✨ FIM DAS INFORMAÇÕES ✨");
+        System.out.println(ciano + "╚══════════════════════════════════╝" + reset);
+
+        System.out.println();
+        System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
+        scanner.nextLine();
+
     }
 
 
