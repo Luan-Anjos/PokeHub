@@ -28,9 +28,6 @@ public class Metodos {
 
     Scanner scanner = new Scanner(System.in);
 
-    Request request = new Request();
-
-
     public void namePokemon(){
         limparTerminal();
 
