@@ -29,13 +29,13 @@ public class Main {
                     }
 
                     if (escolhaBusca.equals("A") || escolhaBusca.equals("a")) {
-                        request.buscaPokemon();
+                        request.exibirBuscaPokemon();
                     } else if (escolhaBusca.equals("B") || escolhaBusca.equals("b")) {
-                        request.BattleAttributes();
+                        request.exibirBattleAttributes();
                     } else if (escolhaBusca.equals("C") || escolhaBusca.equals("c")) {
-                        request.ability();
-                    } else if (escolhaBusca.equals("D") || escolhaBusca.equals("c")) {
-
+                        request.exibirAbility();
+                    } else if (escolhaBusca.equals("D") || escolhaBusca.equals("d")) {
+                        request.exibirEvolutions();
                     } else if (escolhaBusca.equals("E") || escolhaBusca.equals("e")) {
 
                     } else if (escolhaBusca.equals("F") || escolhaBusca.equals("f")) {

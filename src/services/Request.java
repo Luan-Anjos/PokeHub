@@ -25,7 +25,7 @@ public class Request {
     }
 
 
-    public void buscaPokemon() throws Exception {
+    public String buscaPokemon() throws Exception {
 
         String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
 
@@ -39,6 +39,12 @@ public class Request {
                 .thenApply(HttpResponse::body)
                 .join();
 
+        return json;
+    }
+
+    public void exibirBuscaPokemon() throws Exception {
+
+        String json = buscaPokemon();
         final var objectMapper = new ObjectMapper();
         final var dadosPokemon = objectMapper.readValue(json, Pokemon.class);
 
@@ -68,10 +74,13 @@ public class Request {
         System.out.println();
         System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
         scanner.nextLine();
+
     }
 
 
-    public void BattleAttributes() throws JsonProcessingException {
+
+
+    public String BattleAttributes() throws JsonProcessingException {
 
         String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
         HttpClient client = HttpClient.newHttpClient();
@@ -84,6 +93,12 @@ public class Request {
                 .thenApply(HttpResponse::body)
                 .join();
 
+        return json;
+    }
+
+    public void exibirBattleAttributes() throws JsonProcessingException {
+
+        String json = BattleAttributes();
         final var objectMapper = new ObjectMapper();
         final var dadosPokemon = objectMapper.readValue(json, Pokemon.class);
 
@@ -114,23 +129,10 @@ public class Request {
         System.out.println();
         System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
         scanner.nextLine();
-
-
-
-//        for (Stats atributo : dadosPokemon.getStats()) {
-//            System.out.println(
-//                    atributo.getStat().getName() + ": "
-//                            + atributo.getBase_stat()
-//            );
-//        }
-
-
     }
 
 
-
-
-    public void ability () throws JsonProcessingException {
+    public String ability() throws JsonProcessingException {
 
         String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
         HttpClient client = HttpClient.newHttpClient();
@@ -143,23 +145,157 @@ public class Request {
                 .thenApply(HttpResponse::body)
                 .join();
 
-        final var objectMapper = new ObjectMapper();
-        final var dadosAbility = objectMapper.readValue(json, Pokemon.class);
-
-        for(Abilities abilitie : dadosAbility.getAbilities()){
-            System.out.println(
-                    abilitie.getSlot() + ": " + abilitie.getAbility().getName()
-            );
-
-
-
-        }
-
-        System.out.print(" Pressione ENTER para voltar ao menu...");
-        scanner.nextLine();
+        return json;
 
     }
 
+    public void exibirAbility() throws JsonProcessingException {
+        String json = ability();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosAbility = objectMapper.readValue(json, Pokemon.class);
+
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+
+        System.out.println(ciano + "╔══════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "      ✨ HABILIDADES POKÉMON ✨    " + ciano + "║");
+        System.out.println("╠══════════════════════════════════╣" + reset);
+
+        for (Abilities abilitie : dadosAbility.getAbilities()) {
+            System.out.println(
+                    verde + " Slot " + abilitie.getSlot()
+                            + reset + ": "
+                            + amarelo + negrito
+                            + abilitie.getAbility().getName()
+                            + reset
+            );
+        }
+
+        System.out.println(ciano + "╠══════════════════════════════════╣");
+        System.out.println(amarelo + negrito + "     💫 FIM DAS HABILIDADES 💫");
+        System.out.println(ciano + "╚══════════════════════════════════╝" + reset);
+
+        System.out.println();
+        System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
+
+        scanner.nextLine();
+    }
+
+
+    public String pokemonSpecies() throws JsonProcessingException {
+        String url = "https://pokeapi.co/api/v2/pokemon-species/" + controller.getNomePokemon();
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosId = objectMapper.readValue(json, Pokemon.class);
+
+        String setId = dadosId.getEvolution_chain().getUrl();
+
+        controller.setUrlEvolution(setId);
+
+        return setId;
+    }
+
+    public String evolutions() throws JsonProcessingException {
+
+        String url = pokemonSpecies();
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .join();
+
+        return json;
+
+    }
+
+    public void exibirEvolutions() throws JsonProcessingException {
+        String json = evolutions();
+
+        final var objectMapper = new ObjectMapper();
+        final var dadosSpecies = objectMapper.readValue(json, Pokemon.class);
+
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+
+        System.out.println(ciano + "╔══════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "     🧬 EVOLUÇÕES POKÉMON 🧬       " + ciano + "║");
+        System.out.println("╠══════════════════════════════════╣" + reset);
+
+// Pokémon inicial
+        System.out.println(
+                verde + " 🌱 Inicial: "
+                        + amarelo + negrito
+                        + dadosSpecies.getChain().getSpecies().getName()
+                        + reset
+        );
+
+// Primeira evolução
+        for (Evolves_to specie : dadosSpecies.getChain().getEvolves_to()) {
+
+            System.out.println(
+                    ciano + "       ↓" + reset
+            );
+
+            System.out.println(
+                    verde + " ⚡ Evolução: "
+                            + amarelo + negrito
+                            + specie.getSpecies().getName()
+                            + reset
+            );
+
+            // Segunda evolução
+            for (Evolves_to evolution : specie.getEvolves_to()) {
+
+                System.out.println(
+                        ciano + "       ↓" + reset
+                );
+
+                System.out.println(
+                        verde + " 🌟 Evolução final: "
+                                + amarelo + negrito
+                                + evolution.getSpecies().getName()
+                                + reset
+                );
+            }
+        }
+
+        System.out.println(ciano + "╠══════════════════════════════════╣");
+        System.out.println(amarelo + negrito + "      💫 FIM DAS EVOLUÇÕES 💫");
+        System.out.println(ciano + "╚══════════════════════════════════╝" + reset);
+
+        System.out.println();
+        System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
+        scanner.nextLine();
+    }
 
 
 }
+
+
+

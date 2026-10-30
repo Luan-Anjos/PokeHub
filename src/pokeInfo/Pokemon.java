@@ -13,6 +13,8 @@ public class Pokemon {
     Habitat habitat;
     List<Stats> stats;
     List<Abilities> abilities;
+    Chain chain;
+    Evolution_chain evolution_chain;
 
 
     public int getId() {
@@ -46,5 +48,13 @@ public class Pokemon {
 
     public List<Abilities> getAbilities() {
         return abilities;
+    }
+
+    public Chain getChain() {
+        return chain;
+    }
+
+    public Evolution_chain getEvolution_chain() {
+        return evolution_chain;
     }
 }
