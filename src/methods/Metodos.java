@@ -142,6 +142,19 @@ public class Metodos {
         System.out.print(amarelo + negrito + " ⚡ Escolha uma opção: " + reset);
         escolhaBusca = scanner.nextLine();
 
+        if (escolhaBusca.equalsIgnoreCase("A")||escolhaBusca.equalsIgnoreCase("B")||escolhaBusca.equalsIgnoreCase("C")){
+            controller.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon/");
+        } else if (escolhaBusca.equals("D")) {
+            controller.setSelect(escolhaBusca);
+            controller.setUrlRequisicao(null);
+        } else if (escolhaBusca.equalsIgnoreCase("E")){
+            controller.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon-species/");
+        } else if (escolhaBusca.equalsIgnoreCase("F")){
+            controller.setUrlRequisicao("https://pokeapi.co/api/v2/move/");
+        } else {
+            System.out.println("Falha ou inserir a URL!");
+        }
+
         return escolhaBusca;
     }
 

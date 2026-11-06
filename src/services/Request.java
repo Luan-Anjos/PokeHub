@@ -23,8 +23,16 @@ public class Request {
 
 
     public String buscaPokemon() throws Exception {
+        String url;
 
-        String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
+        if ("d".equalsIgnoreCase(controller.getSelect())){
+            String geradorUrl = pokemonSpecies();
+            url = geradorUrl;
+        } else {
+            url = controller.getUrlRequisicao() + controller.getNomePokemon();
+        }
+
+        System.out.println(url);
 
         HttpClient client = HttpClient.newHttpClient();
 
@@ -33,7 +41,13 @@ public class Request {
                 .build();
 
         final var json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
+                .thenApply(response -> {
+                    int status = response.statusCode();
+
+                    System.out.println("Status HTTP: " + status);
+
+                    return response.body();
+                })
                 .join();
 
         return json;
@@ -74,26 +88,9 @@ public class Request {
 
     }
 
+    public void exibirBattleAttributes() throws Exception {
 
-    public String BattleAttributes() throws JsonProcessingException {
-
-        String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .join();
-
-        return json;
-    }
-
-    public void exibirBattleAttributes() throws JsonProcessingException {
-
-        String json = BattleAttributes();
+        String json = buscaPokemon();
         final var objectMapper = new ObjectMapper();
         final var dadosPokemon = objectMapper.readValue(json, Pokemon.class);
 
@@ -126,26 +123,8 @@ public class Request {
         scanner.nextLine();
     }
 
-
-    public String ability() throws JsonProcessingException {
-
-        String url = "https://pokeapi.co/api/v2/pokemon/" + controller.getNomePokemon();
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .join();
-
-        return json;
-
-    }
-
-    public void exibirAbility() throws JsonProcessingException {
-        String json = ability();
+    public void exibirAbility() throws Exception {
+        String json = buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
         final var dadosAbility = objectMapper.readValue(json, Pokemon.class);
@@ -183,7 +162,6 @@ public class Request {
         scanner.nextLine();
     }
 
-
     public String pokemonSpecies() throws JsonProcessingException {
         String url = "https://pokeapi.co/api/v2/pokemon-species/" + controller.getNomePokemon();
         HttpClient client = HttpClient.newHttpClient();
@@ -206,25 +184,8 @@ public class Request {
         return json;
     }
 
-    public String evolutions() throws JsonProcessingException {
-        pokemonSpecies();
-        String url = controller.getUrlEvolution();
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .join();
-
-        return json;
-
-    }
-
-    public void exibirEvolutions() throws JsonProcessingException {
-        String json = evolutions();
+    public void exibirEvolutions() throws Exception {
+        String json = buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
         final var dadosSpecies = objectMapper.readValue(json, Pokemon.class);
@@ -288,7 +249,6 @@ public class Request {
         System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
         scanner.nextLine();
     }
-
 
     public void exbirInformacoesBio() throws JsonProcessingException {
 
@@ -374,28 +334,8 @@ public class Request {
 
     }
 
-    public String moves(){
-        String url = "https://pokeapi.co/api/v2/move/" + controller.getMove();
-
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .join();
-
-        return json;
-    }
-
-
-
-
-
-    public void exibirMoves () throws JsonProcessingException {
-        String json = moves();
+    public void exibirMoves () throws Exception {
+        String json = buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
         final var dadosMoves = objectMapper.readValue(json, Pokemon.class);

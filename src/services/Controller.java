@@ -5,6 +5,11 @@ public class Controller {
     private String nomePokemon;
     private String UrlEvolution;
     private String move;
+    private String UrlRequisicao;
+    private String select;
+
+
+
 
     public String getNomePokemon() {
         return nomePokemon;
@@ -28,5 +33,21 @@ public class Controller {
 
     public void setMove(String move) {
         this.move = move;
+    }
+
+    public String getUrlRequisicao() {
+        return UrlRequisicao;
+    }
+
+    public void setUrlRequisicao(String urlRequisicao) {
+        UrlRequisicao = urlRequisicao;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
     }
 }
