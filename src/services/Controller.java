@@ -7,6 +7,7 @@ public class Controller {
     private String move;
     private String UrlRequisicao;
     private String select;
+    private int page;
 
 
     public String getNomePokemon() {
@@ -47,5 +48,13 @@ public class Controller {
 
     public void setSelect(String select) {
         this.select = select;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

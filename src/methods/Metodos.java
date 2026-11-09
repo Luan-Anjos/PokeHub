@@ -2,10 +2,7 @@ package methods;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pokeInfo.Abilities;
-import pokeInfo.Evolves_to;
-import pokeInfo.Pokemon;
-import pokeInfo.Stats;
+import pokeInfo.*;
 import services.Controller;
 import services.ApiService;
 
@@ -504,6 +501,32 @@ public class Metodos {
         System.out.println();
         System.out.print(amarelo + " Pressione ENTER para voltar ao menu..." + reset);
         scanner.nextLine();
+
+    }
+
+    public void exibirPaginacao() throws JsonProcessingException {
+
+        while (true){
+            String json = apiService.pokedex();
+
+            final var objectMapper = new ObjectMapper();
+            PokePage dadosPage = objectMapper.readValue(json, PokePage.class);
+
+            for (Species pokemon : dadosPage.getResults()) {
+                System.out.println(pokemon.getName());
+            }
+            System.out.println("Pressione 'ENTER' para processeguir para proxima pagina!");
+            String enter = scanner.nextLine();
+
+            if ("".equalsIgnoreCase(enter)){
+                controller.setPage(20);
+            } else {
+                break;
+            }
+
+            System.out.println(controller.getPage());
+        }
+
 
     }
 

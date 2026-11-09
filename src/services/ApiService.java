@@ -13,6 +13,7 @@ import pokeInfo.*;
 
 public class ApiService {
     int status;
+    int page;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -83,6 +84,25 @@ public class ApiService {
         String setId = dadosId.getEvolution_chain().getUrl();
 
         controller.setUrlEvolution(setId);
+
+        return json;
+    }
+
+    public String pokedex () throws JsonProcessingException {
+
+        String url = "https://pokeapi.co/api/v2/pokemon?offset="+ page +"&limit=20";
+        HttpClient client = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        String json = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(response -> {
+                    status = response.statusCode();
+                    return response.body();
+                })
+                .join();
 
         return json;
     }

@@ -48,7 +48,7 @@ public class Main {
 
                 }
             } else if (escolha == 2) {
-
+                metodo.exibirPaginacao();
             } else if (escolha == 3) {
 
             } else if (escolha == 4) {

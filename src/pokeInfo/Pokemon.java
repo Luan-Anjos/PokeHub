@@ -111,4 +111,5 @@ public class Pokemon {
     public int getPower() {
         return power;
     }
+
 }
