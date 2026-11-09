@@ -9,8 +9,6 @@ public class Controller {
     private String select;
 
 
-
-
     public String getNomePokemon() {
         return nomePokemon;
     }

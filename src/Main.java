@@ -1,5 +1,5 @@
 import services.Controller;
-import services.Request;
+import services.ApiService;
 import methods.Metodos;
 
 public class Main {
@@ -8,8 +8,9 @@ public class Main {
 
         Controller controller = new Controller();
 
-        Metodos metodo = new Metodos(controller);
-        Request request = new Request(controller);
+        ApiService apiService = new ApiService(controller);
+        Metodos metodo = new Metodos(controller, apiService);
+
 
         while (true) {
             int escolha = metodo.menu();
@@ -29,18 +30,18 @@ public class Main {
                     }
 
                     if (escolhaBusca.equals("A") || escolhaBusca.equals("a")) {
-                        request.exibirBuscaPokemon();
+                        metodo.exibirBuscaPokemon();
                     } else if (escolhaBusca.equals("B") || escolhaBusca.equals("b")) {
-                        request.exibirBattleAttributes();
+                        metodo.exibirBattleAttributes();
                     } else if (escolhaBusca.equals("C") || escolhaBusca.equals("c")) {
-                        request.exibirAbility();
+                        metodo.exibirAbility();
                     } else if (escolhaBusca.equals("D") || escolhaBusca.equals("d")) {
-                        request.exibirEvolutions();
+                        metodo.exibirEvolutions();
                     } else if (escolhaBusca.equals("E") || escolhaBusca.equals("e")) {
-                        request.exbirInformacoesBio();
+                        metodo.exbirInformacoesBio();
                     } else if (escolhaBusca.equals("F") || escolhaBusca.equals("f")) {
                         metodo.pokeMoves();
-                        request.exibirMoves();
+                        metodo.exibirMoves();
                     } else {
                         System.out.println("Essa opção não é válida: ");
                     }
