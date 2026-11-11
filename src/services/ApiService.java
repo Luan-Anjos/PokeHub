@@ -13,8 +13,6 @@ import pokeInfo.*;
 
 public class ApiService {
     int status;
-    int page;
-
     Scanner scanner = new Scanner(System.in);
 
     private final Controller controller;
@@ -90,7 +88,7 @@ public class ApiService {
 
     public String pokedex () throws JsonProcessingException {
 
-        String url = "https://pokeapi.co/api/v2/pokemon?offset="+ page +"&limit=20";
+        String url = "https://pokeapi.co/api/v2/pokemon?offset="+ controller.getPage() +"&limit=20";
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()

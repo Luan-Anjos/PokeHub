@@ -8,6 +8,7 @@ public class Controller {
     private String UrlRequisicao;
     private String select;
     private int page;
+    private String numeroPokedex;
 
 
     public String getNomePokemon() {
@@ -56,5 +57,13 @@ public class Controller {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public String getNumeroPokedex() {
+        return numeroPokedex;
+    }
+
+    public void setNumeroPokedex(String numeroPokedex) {
+        this.numeroPokedex = numeroPokedex;
     }
 }

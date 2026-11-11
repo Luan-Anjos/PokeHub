@@ -188,7 +188,7 @@ public class Metodos {
     }
 
     public void exibirBuscaPokemon() throws Exception {
-
+        limparTerminal();
         String json = apiService.buscaPokemon();
         final var objectMapper = new ObjectMapper();
         final var dadosPokemon = objectMapper.readValue(json, Pokemon.class);
@@ -223,7 +223,7 @@ public class Metodos {
     }
 
     public void exibirBattleAttributes() throws Exception {
-
+        limparTerminal();
         String json = apiService.buscaPokemon();
         final var objectMapper = new ObjectMapper();
         final var dadosPokemon = objectMapper.readValue(json, Pokemon.class);
@@ -258,6 +258,7 @@ public class Metodos {
     }
 
     public void exibirAbility() throws Exception {
+        limparTerminal();
         String json = apiService.buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
@@ -297,6 +298,7 @@ public class Metodos {
     }
 
     public void exibirEvolutions() throws Exception {
+        limparTerminal();
         String json = apiService.buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
@@ -363,6 +365,7 @@ public class Metodos {
     }
 
     public void exbirInformacoesBio() throws JsonProcessingException {
+        limparTerminal();
 
         String json = apiService.pokemonSpecies();
 
@@ -447,6 +450,8 @@ public class Metodos {
     }
 
     public void exibirMoves () throws Exception {
+        limparTerminal();
+
         String json = apiService.buscaPokemon();
 
         final var objectMapper = new ObjectMapper();
@@ -506,28 +511,70 @@ public class Metodos {
 
     public void exibirPaginacao() throws JsonProcessingException {
 
-        while (true){
+        limparTerminal();
+
+        int contador = 0;
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        String enter;
+
+        while (true) {
+            int numeroPokedex = contador + 1;
+
             String json = apiService.pokedex();
 
             final var objectMapper = new ObjectMapper();
             PokePage dadosPage = objectMapper.readValue(json, PokePage.class);
 
+            System.out.println();
+            System.out.println(ciano + "╔══════════════════════════════════╗");
+            System.out.println("║" + amarelo + negrito + "          📖 POKÉDEX              " + ciano + "║");
+            System.out.println("╠══════════════════════════════════╣" + reset);
+
+
             for (Species pokemon : dadosPage.getResults()) {
-                System.out.println(pokemon.getName());
+                System.out.println(verde + numeroPokedex + ": " + amarelo + pokemon.getName() + reset);
+                numeroPokedex++;
             }
-            System.out.println("Pressione 'ENTER' para processeguir para proxima pagina!");
-            String enter = scanner.nextLine();
 
-            if ("".equalsIgnoreCase(enter)){
-                controller.setPage(20);
-            } else {
+            System.out.println(ciano + "╠══════════════════════════════════╣");
+            System.out.println(amarelo + " [ENTER] " + verde + "Próxima página");
+            System.out.println(amarelo + " [-]     " + verde + "Página anterior");
+            System.out.println(amarelo + " [X]     " + verde + "Sair");
+            System.out.println(ciano + "╚══════════════════════════════════╝" + reset);
+
+            System.out.print(amarelo + " Escolha uma opção: " + reset);
+            enter = scanner.nextLine();
+            controller.setNumeroPokedex(enter);
+
+            if ("X".equalsIgnoreCase(enter)) {
+                controller.setPage(0);
                 break;
+            } else if ("".equals(enter)) {
+                contador += 20;
+                controller.setPage(contador);
+            } else if ("-".equals(enter)) {
+                controller.setNumeroPokedex(enter);
+
+                if (contador <= 0) {
+                    System.out.println(
+                            "\n" + amarelo + " ⚠ Você já está na primeira página!" + reset
+                    );
+                } else {
+                    contador -= 20;
+                    controller.setPage(contador);
+                }
+            } else {
+                System.out.println(
+                        "\n" + amarelo + " ⚠ Opção inválida. Tente novamente." + reset
+                );
             }
-
-            System.out.println(controller.getPage());
         }
-
-
     }
 
 
