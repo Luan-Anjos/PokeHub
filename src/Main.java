@@ -21,32 +21,39 @@ public class Main {
             }
 
             if (escolha == 1) {
-                metodo.namePokemon();
-                while (true) {
-                    String escolhaBusca = metodo.opcaoBusca();
 
-                    if (escolhaBusca.equals("X") || escolhaBusca.equals("x")) {
-                        break;
+
+                if (controller.getOptionBuscaPokemon(true)){
+                    apiService.pokedex();
+                }else {
+                    metodo.namePokemon();
+                    while (true) {
+                        String escolhaBusca = metodo.opcaoBusca();
+
+                        if (escolhaBusca.equals("X") || escolhaBusca.equals("x")) {
+                            break;
+                        }
+
+                        if (escolhaBusca.equalsIgnoreCase("A")) {
+                            metodo.exibirBuscaPokemon();
+                        } else if (escolhaBusca.equalsIgnoreCase("B")) {
+                            metodo.exibirBattleAttributes();
+                        } else if (escolhaBusca.equalsIgnoreCase("C")) {
+                            metodo.exibirAbility();
+                        } else if (escolhaBusca.equalsIgnoreCase("D")) {
+                            metodo.exibirEvolutions();
+                        } else if (escolhaBusca.equalsIgnoreCase("E")) {
+                            metodo.exbirInformacoesBio();
+                        } else if (escolhaBusca.equalsIgnoreCase("F")) {
+                            metodo.pokeMoves();
+                            metodo.exibirMoves();
+                        } else {
+                            System.out.println("Essa opção não é válida: ");
+                        }
+
                     }
-
-                    if (escolhaBusca.equals("A") || escolhaBusca.equals("a")) {
-                        metodo.exibirBuscaPokemon();
-                    } else if (escolhaBusca.equals("B") || escolhaBusca.equals("b")) {
-                        metodo.exibirBattleAttributes();
-                    } else if (escolhaBusca.equals("C") || escolhaBusca.equals("c")) {
-                        metodo.exibirAbility();
-                    } else if (escolhaBusca.equals("D") || escolhaBusca.equals("d")) {
-                        metodo.exibirEvolutions();
-                    } else if (escolhaBusca.equals("E") || escolhaBusca.equals("e")) {
-                        metodo.exbirInformacoesBio();
-                    } else if (escolhaBusca.equals("F") || escolhaBusca.equals("f")) {
-                        metodo.pokeMoves();
-                        metodo.exibirMoves();
-                    } else {
-                        System.out.println("Essa opção não é válida: ");
-                    }
-
                 }
+
             } else if (escolha == 2) {
                 metodo.exibirPaginacao();
             } else if (escolha == 3) {

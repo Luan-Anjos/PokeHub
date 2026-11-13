@@ -9,6 +9,7 @@ public class Controller {
     private String select;
     private int page;
     private String numeroPokedex;
+    private boolean optionBuscaPokemon;
 
 
     public String getNomePokemon() {
@@ -65,5 +66,13 @@ public class Controller {
 
     public void setNumeroPokedex(String numeroPokedex) {
         this.numeroPokedex = numeroPokedex;
+    }
+
+    public boolean getOptionBuscaPokemon(boolean b) {
+        return optionBuscaPokemon;
+    }
+
+    public void setOptionBuscaPokemon(boolean optionBuscaPokemon) {
+        this.optionBuscaPokemon = optionBuscaPokemon;
     }
 }

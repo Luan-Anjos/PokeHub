@@ -31,26 +31,47 @@ public class Metodos {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void namePokemon() {
+    public void namePokemon() throws JsonProcessingException {
         limparTerminal();
 
         String amarelo = "\u001B[93m";
         String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String cinza = "\u001B[37m";
         String reset = "\u001B[0m";
         String negrito = "\u001B[1m";
 
         System.out.println();
+        System.out.println(ciano + "╔══════════════════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "               🔎 BUSCAR POKÉMON               " + ciano + "║");
+        System.out.println("╠══════════════════════════════════════════════╣" + reset);
 
-        System.out.println(ciano + "╔══════════════════════════════════╗");
-        System.out.println("║" + amarelo + negrito + "         🔎 BUSCAR POKÉMON         " + ciano + "║");
-        System.out.println("╚══════════════════════════════════╝" + reset);
+        System.out.println(amarelo + negrito + " [1] " + verde + "📖 Abrir Pokédex" + reset);
+        System.out.println(cinza + "     Recomendado: veja os nomes exatos antes" + reset);
+        System.out.println();
 
-        System.out.print(amarelo + negrito
-                + " ⚡ Digite o nome do Pokémon: "
-                + reset);
+        System.out.println(amarelo + negrito + " [2] " + verde + "⚡ Buscar por nome" + reset);
+        System.out.println(cinza + "     Digite o nome exato (confira na Pokédex)" + reset);
 
-        String pokemon = scanner.nextLine();
-        controller.setNomePokemon(pokemon);
+        System.out.println(ciano + "╚══════════════════════════════════════════════╝" + reset);
+        System.out.print(amarelo + " ⚡ Escolha uma opção: " + reset);
+
+        int optionBuscaPokemon = scanner.nextInt();
+
+        scanner.nextLine();
+
+        if(optionBuscaPokemon == 1){
+            controller.setOptionBuscaPokemon(true);
+            exibirPaginacao();
+        } else if (optionBuscaPokemon == 2){
+            System.out.print(amarelo + negrito
+                    + "2: ⚡ Digite o nome do Pokémon: "
+                    + reset);
+            String pokemon = scanner.nextLine();
+            controller.setNomePokemon(pokemon);
+        }
+
+
     }
 
     public int opcao() {
