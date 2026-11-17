@@ -1,4 +1,4 @@
-package pokeInfo;
+package model;
 
 public class PokeStat {
     private String name;

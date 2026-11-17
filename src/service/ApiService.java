@@ -1,5 +1,5 @@
 
-package services;
+package service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,27 +9,28 @@ import java.util.Scanner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pokeInfo.*;
+import controller.NavigationController;
+import model.Pokemon;
 
 public class ApiService {
     int status;
     Scanner scanner = new Scanner(System.in);
 
-    private final Controller controller;
+    private final NavigationController navigationController;
 
-    public ApiService(Controller controller) {
-        this.controller = controller;
+    public ApiService(NavigationController navigationController) {
+        this.navigationController = navigationController;
     }
 
     public String buscaPokemon() throws Exception {
         String url;
 
-        if ("d".equalsIgnoreCase(controller.getSelect())) {
+        if ("d".equalsIgnoreCase(navigationController.getSelect())) {
             pokemonSpecies();
-            String geradorUrl = controller.getUrlEvolution();
+            String geradorUrl = navigationController.getUrlEvolution();
             url = geradorUrl;
         } else {
-            url = controller.getUrlRequisicao() + controller.getNomePokemon();
+            url = navigationController.getUrlRequisicao() + navigationController.getNomePokemon();
         }
 
         HttpClient client = HttpClient.newHttpClient();
@@ -62,7 +63,7 @@ public class ApiService {
     }
 
     public String pokemonSpecies() throws JsonProcessingException {
-        String url = "https://pokeapi.co/api/v2/pokemon-species/" + controller.getNomePokemon();
+        String url = "https://pokeapi.co/api/v2/pokemon-species/" + navigationController.getNomePokemon();
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -81,14 +82,14 @@ public class ApiService {
 
         String setId = dadosId.getEvolution_chain().getUrl();
 
-        controller.setUrlEvolution(setId);
+        navigationController.setUrlEvolution(setId);
 
         return json;
     }
 
     public String pokedex () throws JsonProcessingException {
 
-        String url = "https://pokeapi.co/api/v2/pokemon?offset="+ controller.getPage() +"&limit=20";
+        String url = "https://pokeapi.co/api/v2/pokemon?offset="+ navigationController.getPage() +"&limit=20";
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -103,6 +104,10 @@ public class ApiService {
                 .join();
 
         return json;
+    }
+
+    public void validarResposta (int status){
+
     }
 
 

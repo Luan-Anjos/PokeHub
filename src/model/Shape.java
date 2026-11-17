@@ -1,19 +1,13 @@
-package pokeInfo;
+package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Habitat {
-    String name;
-    String url;
+
+public class Shape {
+    private String name;
 
     public String getName() {
         return name;
     }
-
-    public String getUrl() {
-        return url;
-    }
-
-
 }

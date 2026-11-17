@@ -1,15 +1,15 @@
-import services.Controller;
-import services.ApiService;
-import methods.Metodos;
+import controller.NavigationController;
+import service.ApiService;
+import ui.ConsoleMenu;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
 
-        Controller controller = new Controller();
+        NavigationController navigationController = new NavigationController();
 
-        ApiService apiService = new ApiService(controller);
-        Metodos metodo = new Metodos(controller, apiService);
+        ApiService apiService = new ApiService(navigationController);
+        ConsoleMenu metodo = new ConsoleMenu(navigationController, apiService);
 
 
         while (true) {
@@ -21,46 +21,42 @@ public class Main {
             }
 
             if (escolha == 1) {
+                metodo.namePokemon();
 
-
-                if (controller.getOptionBuscaPokemon(true)){
-                    apiService.pokedex();
-                }else {
-                    metodo.namePokemon();
+                if (navigationController.getOptionBuscaPokemon()) {
+                    metodo.exibirPaginacao();
+                    navigationController.setOptionBuscaPokemon(false);
+                } else {
                     while (true) {
                         String escolhaBusca = metodo.opcaoBusca();
 
                         if (escolhaBusca.equals("X") || escolhaBusca.equals("x")) {
                             break;
+                        } else {
+                            if (escolhaBusca.equalsIgnoreCase("A")) {
+                                metodo.exibirBuscaPokemon();
+                            } else if (escolhaBusca.equalsIgnoreCase("B")) {
+                                metodo.exibirBattleAttributes();
+                            } else if (escolhaBusca.equalsIgnoreCase("C")) {
+                                metodo.exibirAbility();
+                            } else if (escolhaBusca.equalsIgnoreCase("D")) {
+                                metodo.exibirEvolutions();
+                            } else if (escolhaBusca.equalsIgnoreCase("E")) {
+                                metodo.exbirInformacoesBio();
+                            } else if (escolhaBusca.equalsIgnoreCase("F")) {
+                                metodo.pokeMoves();
+                                metodo.exibirMoves();
+                            } else {
+                                System.out.println("Essa opção não é válida: ");
+                            }
                         }
 
-                        if (escolhaBusca.equalsIgnoreCase("A")) {
-                            metodo.exibirBuscaPokemon();
-                        } else if (escolhaBusca.equalsIgnoreCase("B")) {
-                            metodo.exibirBattleAttributes();
-                        } else if (escolhaBusca.equalsIgnoreCase("C")) {
-                            metodo.exibirAbility();
-                        } else if (escolhaBusca.equalsIgnoreCase("D")) {
-                            metodo.exibirEvolutions();
-                        } else if (escolhaBusca.equalsIgnoreCase("E")) {
-                            metodo.exbirInformacoesBio();
-                        } else if (escolhaBusca.equalsIgnoreCase("F")) {
-                            metodo.pokeMoves();
-                            metodo.exibirMoves();
-                        } else {
-                            System.out.println("Essa opção não é válida: ");
-                        }
 
                     }
                 }
-
             } else if (escolha == 2) {
-                metodo.exibirPaginacao();
-            } else if (escolha == 3) {
-
-            } else if (escolha == 4) {
-
-            } else {
+                metodo.exibirSobre();
+            }  else {
                 System.out.println("Opção inválida: Digite uma das opções que estão exibidas no terminal!");
             }
         }

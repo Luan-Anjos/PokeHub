@@ -1,4 +1,4 @@
-package pokeInfo;
+package model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
@@ -13,11 +13,11 @@ public class Pokemon {
     List<Stats> stats;
     List<Abilities> abilities;
     Chain chain;
-    Evolution_chain evolution_chain;
+    EvolutionChain evolution_chain;
     Color color;
     Shape shape;
     Habitat habitat;
-    List<Flavor_text_entries> flavor_text_entries;
+    List<FlavorTextEntries> flavor_text_entries;
     int capture_rate;
     int base_happiness;
     int hatch_counter;
@@ -64,7 +64,7 @@ public class Pokemon {
         return chain;
     }
 
-    public Evolution_chain getEvolution_chain() {
+    public EvolutionChain getEvolution_chain() {
         return evolution_chain;
     }
 
@@ -76,7 +76,7 @@ public class Pokemon {
         return shape;
     }
 
-    public List<Flavor_text_entries> getFlavor_text_entries() {
+    public List<FlavorTextEntries> getFlavor_text_entries() {
         return flavor_text_entries;
     }
 

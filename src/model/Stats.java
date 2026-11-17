@@ -1,4 +1,4 @@
-package pokeInfo;
+package model;
 
 public class Stats {
     private int base_stat;

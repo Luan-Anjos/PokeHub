@@ -1,23 +1,23 @@
-package methods;
+package ui;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pokeInfo.*;
-import services.Controller;
-import services.ApiService;
+import model.*;
+import controller.NavigationController;
+import service.ApiService;
 
 import java.util.Scanner;
 
-public class Metodos {
+public class ConsoleMenu {
 
     int escolha;
     String escolhaBusca;
 
-    private final Controller controller;
+    private final NavigationController navigationController;
     private final ApiService apiService;
 
-    public Metodos(Controller controller, ApiService apiService) {
-        this.controller = controller;
+    public ConsoleMenu(NavigationController navigationController, ApiService apiService) {
+        this.navigationController = navigationController;
         this.apiService = apiService;
     }
 
@@ -61,14 +61,13 @@ public class Metodos {
         scanner.nextLine();
 
         if(optionBuscaPokemon == 1){
-            controller.setOptionBuscaPokemon(true);
-            exibirPaginacao();
+            navigationController.setOptionBuscaPokemon(true);
         } else if (optionBuscaPokemon == 2){
             System.out.print(amarelo + negrito
-                    + "2: ⚡ Digite o nome do Pokémon: "
+                    + " ⚡ Digite o nome do Pokémon: "
                     + reset);
             String pokemon = scanner.nextLine();
-            controller.setNomePokemon(pokemon);
+            navigationController.setNomePokemon(pokemon);
         }
 
 
@@ -85,7 +84,7 @@ public class Metodos {
         // Cores padrão do PokeHub
         String amarelo = "\u001B[93m";
         String ciano = "\u001B[96m";
-        String preto = "\u001B[30m";
+        String cinza = "\u001B[37m";
         String reset = "\u001B[0m";
         String negrito = "\u001B[1m";
 
@@ -103,23 +102,15 @@ public class Metodos {
         System.out.println("╠══════════════════════════════════════════════╣" + reset);
 
         System.out.println(amarelo + negrito + " 01 " + reset + " " + ciano + "🔎 Buscar Pokémon" + reset);
-        System.out.println("     Consulte dados e características");
+        System.out.println(cinza + "     Pokédex paginada e ficha técnica completa" + reset);
         System.out.println();
 
-        System.out.println(amarelo + negrito + " 02 " + reset + " " + ciano + "🧬 Explorar tipos" + reset);
-        System.out.println("     Tipos, vantagens e fraquezas");
-        System.out.println();
-
-        System.out.println(amarelo + negrito + " 03 " + reset + " " + ciano + "⚖️ Comparar Pokémon" + reset);
-        System.out.println("     Compare atributos e estatísticas");
-        System.out.println();
-
-        System.out.println(amarelo + negrito + " 04 " + reset + " " + ciano + "ℹ️ Sobre o PokeHub" + reset);
-        System.out.println("     Informações sobre o projeto");
+        System.out.println(amarelo + negrito + " 02 " + reset + " " + ciano + "ℹ️  Sobre o PokeHub" + reset);
+        System.out.println(cinza + "     Informações, arquitetura e roadmap" + reset);
         System.out.println();
 
         System.out.println(amarelo + negrito + " 00 " + reset + " " + ciano + "🚪 Sair" + reset);
-        System.out.println("     Encerrar a aplicação");
+        System.out.println(cinza + "     Encerrar a aplicação" + reset);
 
         System.out.println(ciano + "╠══════════════════════════════════════════════╣" + reset);
         System.out.print(amarelo + negrito + " ⚡ Escolha uma opção: " + reset);
@@ -150,7 +141,7 @@ public class Metodos {
         System.out.println("╠══════════════════════════════════╣" + reset);
 
         System.out.println(" Pokémon selecionado: "
-                + verde + negrito + controller.getNomePokemon() + reset);
+                + verde + negrito + navigationController.getNomePokemon() + reset);
 
         System.out.println(ciano + "──────────────────────────────────" + reset);
 
@@ -165,16 +156,16 @@ public class Metodos {
         System.out.println(ciano + "╠══════════════════════════════════╣" + reset);
         System.out.print(amarelo + negrito + " ⚡ Escolha uma opção: " + reset);
         escolhaBusca = scanner.nextLine();
-        controller.setSelect(escolhaBusca);
+        navigationController.setSelect(escolhaBusca);
 
         if (escolhaBusca.equalsIgnoreCase("A") || escolhaBusca.equalsIgnoreCase("B") || escolhaBusca.equalsIgnoreCase("C")) {
-            controller.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon/");
+            navigationController.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon/");
         } else if (escolhaBusca.equalsIgnoreCase("D")) {
             return escolhaBusca;
         } else if (escolhaBusca.equalsIgnoreCase("E")) {
-            controller.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon-species/");
+            navigationController.setUrlRequisicao("https://pokeapi.co/api/v2/pokemon-species/");
         } else if (escolhaBusca.equalsIgnoreCase("F")) {
-            controller.setUrlRequisicao("https://pokeapi.co/api/v2/move/");
+            navigationController.setUrlRequisicao("https://pokeapi.co/api/v2/move/");
         } else {
             System.out.println("Falha ou inserir a URL!");
         }
@@ -205,7 +196,7 @@ public class Metodos {
                 + " ⚡ Digite o nome do ataque: "
                 + reset);
         String buscaMove = scanner.nextLine();
-        controller.setMove(buscaMove);
+        navigationController.setMove(buscaMove);
     }
 
     public void exibirBuscaPokemon() throws Exception {
@@ -347,7 +338,7 @@ public class Metodos {
         );
 
 // Primeira evolução
-        for (Evolves_to specie : dadosSpecies.getChain().getEvolves_to()) {
+        for (EvolvesTo specie : dadosSpecies.getChain().getEvolves_to()) {
 
             System.out.println(
                     ciano + "       ↓" + reset
@@ -361,7 +352,7 @@ public class Metodos {
             );
 
             // Segunda evolução
-            for (Evolves_to evolution : specie.getEvolves_to()) {
+            for (EvolvesTo evolution : specie.getEvolves_to()) {
 
                 System.out.println(
                         ciano + "       ↓" + reset
@@ -492,7 +483,7 @@ public class Metodos {
 
         System.out.println(
                 verde + " \uD83E\uDD4A Golpe selecionado: "
-                        + amarelo + negrito + controller.getMove()
+                        + amarelo + negrito + navigationController.getMove()
                         + reset
         );
 
@@ -571,16 +562,16 @@ public class Metodos {
 
             System.out.print(amarelo + " Escolha uma opção: " + reset);
             enter = scanner.nextLine();
-            controller.setNumeroPokedex(enter);
+            navigationController.setNumeroPokedex(enter);
 
             if ("X".equalsIgnoreCase(enter)) {
-                controller.setPage(0);
+                navigationController.setPage(0);
                 break;
             } else if ("".equals(enter)) {
                 contador += 20;
-                controller.setPage(contador);
+                navigationController.setPage(contador);
             } else if ("-".equals(enter)) {
-                controller.setNumeroPokedex(enter);
+                navigationController.setNumeroPokedex(enter);
 
                 if (contador <= 0) {
                     System.out.println(
@@ -588,14 +579,62 @@ public class Metodos {
                     );
                 } else {
                     contador -= 20;
-                    controller.setPage(contador);
+                    navigationController.setPage(contador);
                 }
+            } else if ("x".equalsIgnoreCase("x")) {
+                break;
             } else {
                 System.out.println(
                         "\n" + amarelo + " ⚠ Opção inválida. Tente novamente." + reset
                 );
             }
         }
+    }
+
+    public void exibirSobre() {
+        limparTerminal();
+
+        String amarelo = "\u001B[93m";
+        String ciano = "\u001B[96m";
+        String verde = "\u001B[92m";
+        String cinza = "\u001B[37m";
+        String reset = "\u001B[0m";
+        String negrito = "\u001B[1m";
+
+        System.out.println();
+        System.out.println(ciano + "╔════════════════════════════════════════════════════════════╗");
+        System.out.println("║" + amarelo + negrito + "                    ℹ️  SOBRE O POKEHUB                     " + ciano + "║");
+        System.out.println("╠════════════════════════════════════════════════════════════╣" + reset);
+
+        System.out.println(verde + negrito + "  📌 O PROJETO" + reset);
+        System.out.println(cinza + "  Aplicação CLI desenvolvida em Java para exploração de" + reset);
+        System.out.println(cinza + "  dados do universo Pokémon em tempo real via PokeAPI." + reset);
+        System.out.println();
+
+        System.out.println(verde + negrito + "  ⚙️  TECNOLOGIAS & ARQUITETURA" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Java (Orientação a Objetos & Coleções)" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Java HttpClient (Consumo assíncrono de API REST)" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Jackson Databind (Desserialização JSON)" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Arquitetura em Camadas (Model, Service, Controller, UI)" + reset);
+        System.out.println();
+
+        System.out.println(verde + negrito + "  🚀 FUNCIONALIDADES ATUAIS" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Pokédex interativa com paginação dinâmica" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Ficha completa: atributos, habilidades, evoluções e golpes" + reset);
+        System.out.println();
+
+        System.out.println(verde + negrito + "  🔄 EVOLUÇÃO CONTÍNUA (ROADMAP)" + reset);
+        System.out.println(cinza + "  Projeto em constante refatoração e melhoria de código." + reset);
+        System.out.println(amarelo + "  • " + cinza + "Em breve: Persistência local em JSON (Favoritos/Time)" + reset);
+        System.out.println(amarelo + "  • " + cinza + "Em breve: Tratamento avançado de exceções e cache" + reset);
+        System.out.println();
+
+        System.out.println(verde + negrito + "  👨‍💻 DESENVOLVEDOR" + reset);
+        System.out.println(cinza + "  Criado por Luan como projeto prático da trilha Java." + reset);
+
+        System.out.println(ciano + "╚════════════════════════════════════════════════════════════╝" + reset);
+        System.out.print(amarelo + "\n  Pressione [ENTER] para voltar ao menu principal..." + reset);
+        scanner.nextLine();
     }
 
 

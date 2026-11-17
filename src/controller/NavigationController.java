@@ -1,6 +1,6 @@
-package services;
+package controller;
 
-public class Controller {
+public class NavigationController {
 
     private String nomePokemon;
     private String UrlEvolution;
@@ -68,7 +68,7 @@ public class Controller {
         this.numeroPokedex = numeroPokedex;
     }
 
-    public boolean getOptionBuscaPokemon(boolean b) {
+    public boolean getOptionBuscaPokemon() {
         return optionBuscaPokemon;
     }
 

@@ -1,9 +1,9 @@
-package pokeInfo;
+package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Flavor_text_entries {
+public class FlavorTextEntries {
     private String flavor_text;
 
     public String getFlavor_text() {

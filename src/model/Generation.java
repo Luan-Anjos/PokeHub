@@ -1,4 +1,4 @@
-package pokeInfo;
+package model;
 
 public class Generation {
     private String name;
